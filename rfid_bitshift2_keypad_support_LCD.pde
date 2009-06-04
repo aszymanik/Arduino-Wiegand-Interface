@@ -1,7 +1,5 @@
 #include <SoftwareSerial.h>
 
-//added this to see if git's working... disregard
-
 template<class T> inline Print &operator <<(Print &obj, T arg) { obj.print(arg); return obj; }
 
 #define rxPin 5
