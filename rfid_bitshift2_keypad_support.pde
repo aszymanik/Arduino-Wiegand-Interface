@@ -1,7 +1,7 @@
 template<class T> inline Print &operator <<(Print &obj, T arg) { obj.print(arg); return obj; }
 
 long previousMillis = 0;
-int interval = 5000;
+int interval = 3000;
 
 char msg[16] = {'\0'};
 long imsg = 0;
@@ -54,7 +54,7 @@ void loop() {
     else if (bit_count && bit_count % 4 == 0 && bit_count <= 12) {
       previousMillis = millis();
       buildcode(bit_holder);
-      Serial << "K: " << decodeByte(bit_holder) << "\n";
+      Serial << "K: " << buildicode(bit_holder) << "\n";
       bit_count = 0;
       bit_holder = 0;
       delay(5);
@@ -63,13 +63,13 @@ void loop() {
     //Serial << "B: " << bit_count << "\n";
 }
 
-char decodeByte(int x) {
+char decodeByte(int x) { //too simple
   if (x == 10) return '*';
   if (x == 11) return '#';
   return x+48; //int to ascii
 }
 
-void buildcode(int buf) {
+void buildcode(int buf) { //probably too complex for its own good
   msg[element++] = buf;
   if (buf == 11) {
     Serial.print("K: ");
@@ -83,7 +83,7 @@ void buildcode(int buf) {
   }
 }
 
-long buildicode(int buf) {
+long buildicode(int buf) { //builds a DEC and returns when # detected
   if (buf == 11) return imsg;
   if (buf != 10) imsg = imsg * 10 + buf;
 }
